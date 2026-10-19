@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="picker_service_name">Files Newest — automatic sorting</string>
+	<string name="picker_service_description">With your permission, Files Newest reads the stock Android Files picker’s visible controls and taps More options, Sort by..., and Modified (newest first). Window-change events detect when you leave Files; other apps’ screen contents are not inspected. Menus may briefly appear. No file contents are read, no screen contents are stored or sent, and no files are selected, changed, or deleted. Disable monitoring in Files Newest or turn off this accessibility service at any time.</string>
+</resources>
