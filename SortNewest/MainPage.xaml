@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SortNewest.MainPage"
+             Title="SortNewest"
+             BackgroundColor="#121212">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+            <Label Text="SortNewest Settings" FontSize="26" FontAttributes="Bold" TextColor="#F2F2F2" />
+            <Label Text="Automatically choose Sort by... → Modified (newest first) in the stock Android Files picker. Uses the installed picker's translations for your device language. These settings remain in English." FontSize="13" TextColor="#CFCFCF" />
+            <Border BackgroundColor="#1E1E1E" Stroke="#455A64" StrokeThickness="1" Padding="16">
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="16">
+                    <Label Text="Picker monitoring" FontSize="18" FontAttributes="Bold" TextColor="#F2F2F2" VerticalOptions="Center" />
+                    <Switch x:Name="MonitoringSwitch" Grid.Column="1" Toggled="OnMonitoringToggled" OnColor="#2E7D32" VerticalOptions="Center" />
+                    <Label x:Name="MonitoringStatusLabel" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,8,0,0" FontSize="13" TextColor="#A5D6A7" />
+                </Grid>
+            </Border>
+            <Border BackgroundColor="#1E1E1E" Stroke="#3D8BFD" StrokeThickness="1" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="One-time setup" FontSize="18" FontAttributes="Bold" TextColor="#F2F2F2" />
+                    <Label Text="1. Enable picker monitoring above.&#10;2. Open Accessibility settings below.&#10;3. Find SortNewest — automatic sorting under downloaded apps and enable it.&#10;4. Return here and open the test picker." FontSize="14" TextColor="#CFCFCF" />
+                    <Label x:Name="AccessibilityStatusLabel" FontSize="13" TextColor="#A5D6A7" />
+                    <Button Text="Open Accessibility Settings" Clicked="OnAccessibilitySettingsClicked" BackgroundColor="#2E7D32" TextColor="White" />
+                    <Button Text="Open Test File Picker" Clicked="OnTestPickerClicked" BackgroundColor="#455A64" TextColor="White" />
+                </VerticalStackLayout>
+            </Border>
+            <Border BackgroundColor="#1E1E1E" Stroke="#455A64" StrokeThickness="1" Padding="16">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Last action" FontSize="18" FontAttributes="Bold" TextColor="#F2F2F2" />
+                    <Label x:Name="LastActionLabel" FontSize="13" TextColor="#A5D6A7" />
+                </VerticalStackLayout>
+            </Border>
+            <Label Text="Accessibility &amp; privacy" FontSize="18" FontAttributes="Bold" TextColor="#F2F2F2" />
+            <Label Text="This service receives window-change events to detect Files and when you leave it. It inspects visible controls only in the stock Files picker and taps its sort controls. Menus briefly appear. It does not open, select, edit, or delete files, read file contents, or send data anywhere. Only the monitoring preference and a generic last-action message are saved locally." FontSize="13" TextColor="#CFCFCF" />
+            <Label Text="This is UI automation, not a system-wide default. Custom app pickers, renamed resources, independently configured picker languages, and some Android versions may be unsupported. Turn monitoring off to choose a different sort manually. If a menu gets stuck, close it yourself; reopen Files to retry. Android may require Allow restricted settings from this app’s App info menu for a sideloaded accessibility service." FontSize="13" TextColor="#CFCFCF" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

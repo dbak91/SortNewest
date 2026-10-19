@@ -1,7 +1,0 @@
-<Solution>
-  <Project Path="AndroidApp1/AndroidApp1.csproj">
-  </Project>
-  <Project Path="FilesNewest/FilesNewest.csproj">
-    <Deploy />
-  </Project>
-</Solution>

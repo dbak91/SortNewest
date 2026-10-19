@@ -2,6 +2,25 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.github/copilot-instructions.md
-/.vs/CopilotSnapshots
+/*
+!/.gitignore
+!/SortNewest.slnx
+!/SortNewest/
+
 .vs/
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.apk
+*.aab
+release-signing/
+*.keystore
+*.jks
+*.pfx
+*.p12
+.env
+.env.*
+!.env.example

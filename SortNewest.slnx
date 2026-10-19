@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="SortNewest/SortNewest.csproj">
+	<Deploy />
+  </Project>
+</Solution>
