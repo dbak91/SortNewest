@@ -1,6 +1,9 @@
 ## SortNewest
 A basic accessibility watcher to automatically select "Sort by..." "Modified (newest first)" on Android/Pixel.
 
+## Notes 
+- Only tested in English but attempts to use general android translations for automation. (the in app text remains English
+- Only tested on Pixel 7 emulated and Pixel 8a physical. 
 ## Usage Instructions
 - Enable Accessibility settings
 - Enable Monitoring
