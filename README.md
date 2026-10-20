@@ -13,4 +13,4 @@ A basic accessibility watcher to automatically select "Sort by..." "Modified (ne
 - Next on Android, go to Settings-Apps-SortNewest-Three dots-Allow restricted settings
 - Go back to SortNewest or Accessibility settings and open.
 - Turn on the first option for accessibility
-- 
+- Return to SortNewest and enable monitoring 
