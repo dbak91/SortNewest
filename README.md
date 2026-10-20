@@ -6,7 +6,7 @@ A basic accessibility watcher to automatically select "Sort by..." "Modified (ne
 - Enable Monitoring
 - Test picker
 
-##Installation instructions [Accessibility options](video in release)
+## Installation instructions [Accessibility options](video in release)
 - Enable developer mode and unknown sources (Google for your model)
 - Install apk by following the prompts (see tutorial)
 - First press open accessibility settings, attempt to turn on for SortNewest and close the warning.
