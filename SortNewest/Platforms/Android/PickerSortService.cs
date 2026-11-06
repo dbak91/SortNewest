@@ -19,7 +19,8 @@ public sealed class PickerSortService : AccessibilityService
     private bool _scheduled;
     private bool _sessionCompleted;
     private int _polls;
-    private PickerSortLabels _labels = PickerSortLabels.English;
+    private PickerSortOption _sortOption = PickerSortOptions.Default;
+    private PickerSortLabels _labels = PickerSortLabels.English(PickerSortOptions.Default);
 
     public static bool Connected { get; private set; }
 
@@ -93,7 +94,8 @@ public sealed class PickerSortService : AccessibilityService
                 if (_sessionCompleted)
                     return;
 
-                _labels = PickerSortLabels.Load(this, root.PackageName!.ToString()!);
+                _sortOption = PickerSortOptions.From(PickerSettings.SortOrder);
+                _labels = PickerSortLabels.Load(this, root.PackageName!.ToString()!, _sortOption);
 
                 // Never select items by matching arbitrary file names in the directory list.
                 if (HasChoiceDialog(root))
@@ -103,7 +105,7 @@ public sealed class PickerSortService : AccessibilityService
                 else if (ClickSortMenu(root))
                 {
                     _stage = Stage.SortChoices;
-                    SetStatus("Opened Sort by...; waiting for newest-first option.");
+                    SetStatus($"Opened Sort by...; waiting for {_sortOption.DisplayName}.");
                 }
                 else if (Visit(root, node => IsOverflow(node) && Click(node)))
                 {
@@ -123,7 +125,7 @@ public sealed class PickerSortService : AccessibilityService
                 {
                     _stage = Stage.SortChoices;
                     _polls = 0;
-                    SetStatus("Opened Sort by...; waiting for newest-first option.");
+                    SetStatus($"Opened Sort by...; waiting for {_sortOption.DisplayName}.");
                 }
             }
             else if (_stage == Stage.SortChoices)
@@ -131,7 +133,7 @@ public sealed class PickerSortService : AccessibilityService
                 bool alreadySelected = false;
                 bool found = HasChoiceDialog(root) && Visit(root, node =>
                 {
-                    if (!IsNewestChoice(node))
+                    if (!IsTargetChoice(node))
                         return false;
 
                     alreadySelected = IsChecked(node);
@@ -141,26 +143,28 @@ public sealed class PickerSortService : AccessibilityService
                 {
                     _stage = Stage.Confirm;
                     _polls = 0;
-                    SetStatus(alreadySelected ? "Newest-first option is already selected." : "Tapped Modified (newest first).");
+                    SetStatus(alreadySelected
+                        ? $"{_sortOption.DisplayName} is already selected."
+                        : $"Tapped {_sortOption.DisplayName}.");
                 }
             }
             else if (_stage == Stage.Confirm)
             {
                 if (!HasChoiceDialog(root))
                 {
-                    Finish("Newest-first option selected; sort dialog closed.");
+                    Finish($"{_sortOption.DisplayName} selected; sort dialog closed.");
                     return;
                 }
 
                 if (Visit(root, node => node.ViewIdResourceName == "android:id/button1" && Click(node)))
                 {
-                    Finish("Newest-first option selected and confirmed.");
+                    Finish($"{_sortOption.DisplayName} selected and confirmed.");
                     return;
                 }
 
                 if (_polls >= 3)
                 {
-                    Finish("Newest-first option selected. Close the sort dialog manually if it remains open.");
+                    Finish($"{_sortOption.DisplayName} selected. Close the sort dialog manually if it remains open.");
                     return;
                 }
             }
@@ -201,12 +205,13 @@ public sealed class PickerSortService : AccessibilityService
         node.VisibleToUser && node.Enabled &&
         (node.ClassName?.ToString() is "android.widget.ImageButton" or "android.widget.ImageView") &&
         (Exact(node.ContentDescription?.ToString(), _labels.Overflow) ||
-         (_labels == PickerSortLabels.English && Exact(node.ContentDescription?.ToString(), "More")));
+         (_labels.Overflow == PickerSortLabels.EnglishOverflow &&
+          Exact(node.ContentDescription?.ToString(), "More")));
 
-    private bool HasChoiceDialog(AccessibilityNodeInfo root) => Visit(root, IsNewestChoice);
+    private bool HasChoiceDialog(AccessibilityNodeInfo root) => Visit(root, IsTargetChoice);
 
-    private bool IsNewestChoice(AccessibilityNodeInfo node) =>
-        Exact(node.Text?.ToString(), _labels.NewestFirst) &&
+    private bool IsTargetChoice(AccessibilityNodeInfo node) =>
+        Exact(node.Text?.ToString(), _labels.SortChoice) &&
         (node.Checkable || node.ClassName?.ToString() is "android.widget.CheckedTextView" or "android.widget.RadioButton" ||
          node.ViewIdResourceName is "android:id/text1");
 
