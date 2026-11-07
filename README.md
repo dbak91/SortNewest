@@ -22,3 +22,6 @@ Confirmed picker options are file name A–Z/Z–A, type A–Z/Z–A, size small
 - Turn on the first option for accessibility
 - Return to SortNewest and enable monitoring 
 <img width="864" height="1735" alt="Screenshot_20261020-120109" src="https://github.com/user-attachments/assets/d7170800-8ee2-492a-b436-c13cfe31f68f" />
+
+<img width="864" height="1920" alt="Screenshot_20261106-172818" src="https://github.com/user-attachments/assets/393d3048-94fe-4a4a-8666-0b591f0fb507" />
+
