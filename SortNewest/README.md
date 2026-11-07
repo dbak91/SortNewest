@@ -22,12 +22,21 @@ A release signed with this key cannot update an existing debug-signed installati
 
 ## Enable
 
-1. Open **SortNewest**, turn on **Picker monitoring**, and read/accept the accessibility explanation.
-2. Tap **Open Accessibility Settings**. Enable **SortNewest — automatic sorting** (usually under downloaded apps).
-3. If Android blocks the setting for a sideloaded APK, open Settings → Apps → SortNewest → three-dot menu → **Allow restricted settings**, then return to Accessibility. Only do this for a build you trust.
-4. Return to the app and tap **Open Test File Picker**. No file needs to be selected; Back closes the test.
-5. The service taps **More options → Sort by... → Modified (newest first)**, and **OK/Apply** if the recognized dialog requires it.
-6. To use another sort order manually, pause monitoring first. To revoke access completely, turn the service off in Android Accessibility settings.
+1. Open **SortNewest** and choose an **Automatic sort order**, or keep the default **Modified (newest first)**.
+2. Turn on **Picker monitoring**, and read/accept the accessibility explanation.
+3. Tap **Open Accessibility Settings**. Enable **SortNewest — automatic sorting** (usually under downloaded apps).
+4. If Android blocks the setting for a sideloaded APK, open Settings → Apps → SortNewest → three-dot menu → **Allow restricted settings**, then return to Accessibility. Only do this for a build you trust.
+5. Return to the app and tap **Open Test File Picker**. No file needs to be selected; Back closes the test.
+6. The service taps **More options → Sort by... → your chosen option**, and **OK/Apply** if the recognized dialog requires it.
+7. A changed order applies when the next picker opens. To sort manually, pause monitoring first. To revoke access completely, turn the service off in Android Accessibility settings.
+
+The confirmed stock DocumentsUI choices are:
+
+- **Modified (newest first)** — default
+- **Modified (oldest first)**
+- **File name (A to Z)** and **File name (Z to A)**
+- **Type (A to Z)** and **Type (Z to A)**
+- **Size (largest first)** and **Size (smallest first)**
 
 Android manages the enabled accessibility service; no foreground service, notification, boot receiver, or battery-exemption request is needed. Manufacturer restrictions or force-stop may prevent reconnection; check the connection status after reboot.
 
@@ -36,14 +45,14 @@ Android manages the enabled accessibility service; no foreground service, notifi
 - Supports stock DocumentsUI packages `com.google.android.documentsui` and `com.android.documentsui`, not Files by Google’s standalone browser, third-party managers, or custom app pickers.
 - Uses the installed picker's own translated string resources for the device language, including either three dots or an ellipsis in **Sort by...**. Shared menu-label IDs are combined with an exact localized label and menu structure; recognized sort dialogs use the positive-button ID for confirmation. Does not use screen coordinates or select arbitrary files whose names match sort labels.
 - Receives window-change events to cancel when another app takes focus. Only Files roots are traversed. Android may display a broader standard accessibility warning because the platform grants window-content access.
-- No Internet or storage permissions, analytics, file-content access, file modification, or file selection. Preferences contain only monitoring on/off and a generic last-action message. Picker-session state remains in memory only; folder paths are not tracked.
+- No Internet or storage permissions, analytics, file-content access, file modification, or file selection. Preferences contain only monitoring on/off, the chosen sort order, and a generic last-action message. Picker-session state remains in memory only; folder paths are not tracked.
 - This is visible UI automation, not a modification of Android’s default sorting. Menus may briefly open. Layout changes, list loading, locked/profile-isolated pickers, or missing controls can prevent automation.
 - Checks once per picker opening, not per folder or storage-provider change. Completed or stopped attempts are not repeated while navigating within the picker. Leaving Files resets the session so the next picker opening can sort again. Temporary missing accessibility roots do not reset the session.
 - Attempts are bounded. Unknown dialogs are not dismissed automatically. If a menu is left open, close it manually and reopen the picker. Turning monitoring off stops queued actions; turning off the accessibility service revokes access.
 
 ## Picker languages
 
-The service reads `menu_sort`, `sort_dimension_date_descending`, and `abc_action_menu_overflow_description` from the supported DocumentsUI package. Android selects the translations for the current device configuration, so there is no fixed language list or online translation dependency. All translations supplied by that installed picker can be used; languages it does not translate follow Android's normal resource fallback. The SortNewest settings page and status messages remain English.
+The service reads `menu_sort`, `abc_action_menu_overflow_description`, and the resource for the configured choice from the supported DocumentsUI package. The choice resources are `sort_dimension_name_ascending`, `sort_dimension_name_descending`, `sort_dimension_file_type_ascending`, `sort_dimension_file_type_descending`, `sort_dimension_size_ascending`, `sort_dimension_size_descending`, `sort_dimension_date_ascending`, and `sort_dimension_date_descending`. Android selects the translations for the current device configuration, so there is no fixed language list or online translation dependency. All translations supplied by that installed picker can be used; languages it does not translate follow Android's normal resource fallback. The SortNewest settings page and status messages remain English.
 
 Labels are resolved again when starting a new sorting attempt. Missing or inaccessible resources fall back to the original English labels. Matching remains exact, apart from surrounding whitespace and equivalent ellipsis punctuation. The service does not guess menu positions or sorting direction. Customized pickers that rename resources or use a different per-app language from the device may not match; unrecognized controls are left untouched.
 
@@ -53,11 +62,12 @@ Android package visibility is limited to the two supported DocumentsUI packages 
 
 A successful build cannot verify another app’s accessibility tree. Before relying on the app, perform these checks on the target Pixel:
 
-- Set the picker to **File name (A to Z)**. Open it through the test button; confirm **Modified (newest first)** becomes selected and the resulting order is correct.
+- Keep the app default at **Modified (newest first)**. Set the picker to **File name (A to Z)**, open it through the test button, and confirm newest-first becomes selected and the resulting order is correct.
+- Configure each of the other seven options in turn. Close and reopen the picker after each change; confirm the chosen option and direction are selected.
 - Test a picker opened from another app and navigate between folders and storage providers; the sort menu must not reopen during navigation.
 - Close the picker, then open a new picker request; sorting should run once again.
-- Start with newest-first already selected: no repeated menu opening should occur.
-- Repeat with another device language supported by the installed picker; confirm the localized newest-first option is selected. Include a right-to-left language where available. Restore your preferred language afterward. A build or resource-table inspection alone does not validate every translated UI.
+- Start with the configured option already selected: no repeated menu opening should occur.
+- Repeat with another device language supported by the installed picker; confirm the localized configured option is selected. Include a right-to-left language where available. Restore your preferred language afterward. A build or resource-table inspection alone does not validate every translated UI.
 - Leave the picker while automation starts: no clicks should occur in the next app.
 - Turn monitoring off: sort controls must remain untouched. Turn the accessibility service off: status should show it is not connected.
 - Try a custom picker: it must remain untouched.

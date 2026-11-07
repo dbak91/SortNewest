@@ -13,6 +13,8 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
         _refreshing = true;
+        SortOrderPicker.ItemsSource = PickerSortOptions.All.Select(option => option.DisplayName).ToArray();
+        SortOrderPicker.SelectedIndex = PickerSortOptions.IndexOf(PickerSettings.SortOrder);
         MonitoringSwitch.IsToggled = PickerSettings.Enabled;
         _refreshing = false;
     }
@@ -36,13 +38,28 @@ public partial class MainPage : ContentPage
 
     private void OnStatusTick(object? sender, EventArgs e) => RefreshStatus();
 
+    private void OnSortOrderChanged(object? sender, EventArgs e)
+    {
+        if (_refreshing || SortOrderPicker.SelectedIndex < 0)
+            return;
+
+        PickerSortOption selected = PickerSortOptions.All[SortOrderPicker.SelectedIndex];
+        if (selected.Order == PickerSettings.SortOrder)
+            return;
+
+        PickerSettings.SortOrder = selected.Order;
+        PickerSettings.LastStatus = $"Sort order set to {selected.DisplayName}. It will apply when a new picker opens.";
+        RefreshStatus();
+    }
+
     private async void OnMonitoringToggled(object? sender, ToggledEventArgs e)
     {
         if (_refreshing)
             return;
 
+        PickerSortOption selected = PickerSortOptions.From(PickerSettings.SortOrder);
         if (e.Value && !await DisplayAlertAsync("Allow picker automation?",
-            "SortNewest uses an accessibility service to inspect the stock Files picker’s visible controls and tap More options → Sort by... → Modified (newest first). It also receives window-change events to stop when you leave Files. It does not inspect other apps’ screen contents, access file contents, or transmit data. You can disable it at any time. Enable monitoring?",
+            $"SortNewest uses an accessibility service to inspect the stock Files picker’s visible controls and tap More options → Sort by... → {selected.DisplayName}. It also receives window-change events to stop when you leave Files. It does not inspect other apps’ screen contents, access file contents, or transmit data. You can disable it at any time. Enable monitoring?",
             "Enable", "Cancel"))
         {
             _refreshing = true;

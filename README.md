@@ -1,5 +1,7 @@
 ## SortNewest
-A basic accessibility watcher to automatically select "Sort by..." "Modified (newest first)" on Android/Pixel.
+An accessibility watcher that automatically selects a configured **Sort by...** option in the stock Android file picker. **Modified (newest first)** remains the default.
+
+Confirmed picker options are file name A–Z/Z–A, type A–Z/Z–A, size smallest/largest first, and modified oldest/newest first.
 
 ## Notes 
 - Only tested in English but attempts to use general android translations for automation. (the in app text remains English)
@@ -7,6 +9,7 @@ A basic accessibility watcher to automatically select "Sort by..." "Modified (ne
   
 ## Usage Instructions
 - Enable Accessibility settings
+- Choose an automatic sort order (or keep the newest-first default)
 - Enable Monitoring
 - Test picker
 

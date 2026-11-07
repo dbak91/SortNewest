@@ -4,20 +4,25 @@ using Android.Content.Res;
 
 namespace SortNewest;
 
-internal sealed record PickerSortLabels(string SortMenu, string NewestFirst, string Overflow)
+internal sealed record PickerSortLabels(string SortMenu, string SortChoice, string Overflow)
 {
-    internal static PickerSortLabels English { get; } = new("Sort by...", "Modified (newest first)", "More options");
+    internal const string EnglishOverflow = "More options";
 
-    internal static PickerSortLabels Load(Context context, string packageName)
+    internal static PickerSortLabels English(PickerSortOption option) =>
+        new("Sort by...", option.EnglishPickerLabel, EnglishOverflow);
+
+    internal static PickerSortLabels Load(Context context, string packageName, PickerSortOption option)
     {
+        PickerSortLabels english = English(option);
+
         if (packageName is not ("com.google.android.documentsui" or "com.android.documentsui"))
-            return English;
+            return english;
 
         try
         {
             using var resources = context.PackageManager?.GetResourcesForApplication(packageName);
             if (resources is null)
-                return English;
+                return english;
 
             string Read(string name, string fallback)
             {
@@ -26,17 +31,17 @@ internal sealed record PickerSortLabels(string SortMenu, string NewestFirst, str
             }
 
             return new PickerSortLabels(
-                Read("menu_sort", English.SortMenu),
-                Read("sort_dimension_date_descending", English.NewestFirst),
-                Read("abc_action_menu_overflow_description", English.Overflow));
+                Read("menu_sort", english.SortMenu),
+                Read(option.PickerResourceName, english.SortChoice),
+                Read("abc_action_menu_overflow_description", english.Overflow));
         }
         catch (PackageManager.NameNotFoundException)
         {
-            return English;
+            return english;
         }
         catch (Resources.NotFoundException)
         {
-            return English;
+            return english;
         }
     }
 

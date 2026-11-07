@@ -7,7 +7,19 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="14">
             <Label Text="SortNewest Settings" FontSize="26" FontAttributes="Bold" TextColor="#F2F2F2" />
-            <Label Text="Automatically choose Sort by... → Modified (newest first) in the stock Android Files picker. Uses the installed picker's translations for your device language. These settings remain in English." FontSize="13" TextColor="#CFCFCF" />
+            <Label Text="Automatically choose your preferred Sort by... option in the stock Android Files picker. Modified (newest first) remains the default. Uses the installed picker's translations for your device language. These settings remain in English." FontSize="13" TextColor="#CFCFCF" />
+            <Border BackgroundColor="#1E1E1E" Stroke="#455A64" StrokeThickness="1" Padding="16">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Automatic sort order" FontSize="18" FontAttributes="Bold" TextColor="#F2F2F2" />
+                    <Label Text="Applied when a new stock Files picker opens." FontSize="13" TextColor="#CFCFCF" />
+                    <Picker x:Name="SortOrderPicker"
+                            Title="Choose a sort order"
+                            SelectedIndexChanged="OnSortOrderChanged"
+                            BackgroundColor="#2A2A2A"
+                            TextColor="#F2F2F2"
+                            TitleColor="#CFCFCF" />
+                </VerticalStackLayout>
+            </Border>
             <Border BackgroundColor="#1E1E1E" Stroke="#455A64" StrokeThickness="1" Padding="16">
                 <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="16">
                     <Label Text="Picker monitoring" FontSize="18" FontAttributes="Bold" TextColor="#F2F2F2" VerticalOptions="Center" />
@@ -31,8 +43,8 @@
                 </VerticalStackLayout>
             </Border>
             <Label Text="Accessibility &amp; privacy" FontSize="18" FontAttributes="Bold" TextColor="#F2F2F2" />
-            <Label Text="This service receives window-change events to detect Files and when you leave it. It inspects visible controls only in the stock Files picker and taps its sort controls. Menus briefly appear. It does not open, select, edit, or delete files, read file contents, or send data anywhere. Only the monitoring preference and a generic last-action message are saved locally." FontSize="13" TextColor="#CFCFCF" />
-            <Label Text="This is UI automation, not a system-wide default. Custom app pickers, renamed resources, independently configured picker languages, and some Android versions may be unsupported. Turn monitoring off to choose a different sort manually. If a menu gets stuck, close it yourself; reopen Files to retry. Android may require Allow restricted settings from this app’s App info menu for a sideloaded accessibility service." FontSize="13" TextColor="#CFCFCF" />
+            <Label Text="This service receives window-change events to detect Files and when you leave it. It inspects visible controls only in the stock Files picker and taps its sort controls. Menus briefly appear. It does not open, select, edit, or delete files, read file contents, or send data anywhere. Only the monitoring preference, chosen sort order, and a generic last-action message are saved locally." FontSize="13" TextColor="#CFCFCF" />
+            <Label Text="This is UI automation, not a system-wide default. Custom app pickers, renamed resources, independently configured picker languages, and some Android versions may be unsupported. Change the automatic order above, or turn monitoring off to sort manually. If a menu gets stuck, close it yourself; reopen Files to retry. Android may require Allow restricted settings from this app’s App info menu for a sideloaded accessibility service." FontSize="13" TextColor="#CFCFCF" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
