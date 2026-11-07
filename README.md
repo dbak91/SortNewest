@@ -17,10 +17,10 @@ Confirmed picker options are file name A–Z/Z–A, type A–Z/Z–A, size small
 - Enable developer mode and unknown sources (Google for your model)
 - Install apk by following the prompts (see tutorial)
 - Open app, First press 'open accessibility settings', then attempt to turn on the setting for SortNewest and close the warning.
-- Next on Android, go to Settings-Apps-SortNewest-Three dots-Allow restricted settings (Note if you did not attempt to turn it on in the previous step this option will not be listed. Repeat previous)
-- Go back ti SortNewest or Accessibility settings and open.
+- Next on Android, go to Settings-Apps-SortNewest-Hamburger(Three dots)-Allow restricted settings (Note if you did not attempt to turn it on in the previous step this option will not be listed. Repeat previous)
+- Go back to SortNewest-Open accessibility or get there through Android Accessibility settings and open for SortNewest
 - Turn on the first option for accessibility
-- Return to SortNewest and enable monitoring 
+- Return to SortNewest and enable monitoring and test 
 <img width="864" height="1735" alt="Screenshot_20261020-120109" src="https://github.com/user-attachments/assets/d7170800-8ee2-492a-b436-c13cfe31f68f" />
 
 <img width="864" height="1920" alt="Screenshot_20261106-172818" src="https://github.com/user-attachments/assets/393d3048-94fe-4a4a-8666-0b591f0fb507" />
