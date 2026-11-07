@@ -16,7 +16,7 @@ Confirmed picker options are file name A–Z/Z–A, type A–Z/Z–A, size small
 ## Installation instructions [Accessibility options](video in release)
 - Enable developer mode and unknown sources (Google for your model)
 - Install apk by following the prompts (see tutorial)
-- First press open accessibility settings, then attempt to turn on the setting for SortNewest and close the warning.
+- Open app, First press 'open accessibility settings', then attempt to turn on the setting for SortNewest and close the warning.
 - Next on Android, go to Settings-Apps-SortNewest-Three dots-Allow restricted settings (Note if you did not attempt to turn it on in the previous step this option will not be listed. Repeat previous)
 - Go back ti SortNewest or Accessibility settings and open.
 - Turn on the first option for accessibility
